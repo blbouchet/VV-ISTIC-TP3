@@ -76,22 +76,26 @@ class Date implements Comparable<Date> {
         return ((year % 4 == 0) && (year % 100 != 0) | (year % 400 == 0));
     }
 
+//
+
     public Date nextDate(Date date) {
-        int newDay = day;
-        int newMonth = month;
-        int newYear = year;
+        int day = this.day;
+        int month = this.month;
+        int year = this.year;
         Date res;
-        // handle end of month
 
         if (day < date.countDays(month, year)) {
             res = new Date(day + 1, month, year);
         } else {
-            if (month < 12) {
-                res = new Date(day, month + 1, year);
-            } else res = new Date(day, month, year + 1);
+            int daysInMonth = date.countDays(month, year);
+            int newDay = day - daysInMonth + 1;
+            int newMonth = (month % 12) + 1;
+            int newYear = (month == 12) ? year + 1 : year;
+            res = new Date(newDay, newMonth, newYear);
         }
         return res;
     }
+
 
 
 
